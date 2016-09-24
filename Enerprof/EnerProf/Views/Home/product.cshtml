@@ -1,0 +1,301 @@
+﻿@using EnerProf.Models
+@model EnerProf.Models.Product
+
+@{
+    ViewBag.Title = "product";
+    Layout = "~/Views/Home/_HomeLayout.cshtml";
+    List<Model> models = ViewBag.SelectedModels;
+    Dictionary<string, string> attr = ViewBag.Attr;
+}
+
+<script type="application/x-javascript">
+    addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false);
+           function hideURLbar(){ window.scrollTo(0,1); } </script>
+<!-- //for-mobile-apps -->
+<link href="~/css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
+<link rel="stylesheet" href="~/css/flexslider.css" type="text/css" media="screen" />
+<link href="~/css/style.css" rel="stylesheet" type="text/css" media="all" />
+<!-- js -->
+<script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
+<!-- //js -->
+<!-- single -->
+<script src="~/js/imagezoom.js"></script>
+<script src="~/js/jquery.flexslider.js"></script>
+<!-- single -->
+<!-- cart -->
+<script src="js/simpleCart.min.js"></script>
+<!-- cart -->
+<!-- for bootstrap working -->
+<script type="text/javascript" src="js/bootstrap-3.1.1.min.js"></script>
+<!-- //for bootstrap working -->
+<!--<link href='//fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
+<link href='//fonts.googleapis.com/css?family=Lato:400,100,100italic,300,300italic,400italic,700,900,900italic,700italic' rel='stylesheet' type='text/css'>-->
+<script src="js/jquery.easing.min.js"></script>
+
+<div class="page-head">
+    <div class="container">
+        <h3>Цилиндры</h3>
+    </div>
+</div>
+<!-- //banner -->
+<!-- single -->
+<div class="single">
+    <div class="container">
+        <div class="col-md-6 single-right-left animated wow slideInUp animated" data-wow-delay=".5s" style="visibility: visible; animation-delay: 0.5s; animation-name: slideInUp;">
+            <div class="grid images_3_of_2">
+                <div class="flexslider">
+                    <!-- FlexSlider -->
+                    <script>
+
+							$(window).load(function() {
+								$('.flexslider').flexslider({
+								animation: "slide",
+								controlNav: "thumbnails"
+								});
+							});
+                    </script>
+                    <!-- //FlexSlider-->
+                    <ul class="slides">
+                        @foreach (var image in Model.Images.Split(';'))
+                        {
+                            <li data-thumb="@image">
+                                <div class="thumb-image"> <img src="@image" data-imagezoom="true" class="img-responsive"> </div>
+                            </li>
+                        }
+                        
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 single-right-left simpleCart_shelfItem animated wow slideInRight animated" data-wow-delay=".5s" style="visibility: visible; animation-delay: 0.5s; animation-name: slideInRight;">
+            <h3>@Model.Name</h3>
+            <p><span class="item_price"></span> </del></p> <!--Place for future price in case if Igor wish-->
+            <div class="rating1">
+                <span class="starRating">
+                    <input id="rating5" type="radio" name="rating" value="5">
+                    <label for="rating5">5</label>
+                    <input id="rating4" type="radio" name="rating" value="4">
+                    <label for="rating4">4</label>
+                    <input id="rating3" type="radio" name="rating" value="3" checked="">
+                    <label for="rating3">3</label>
+                    <input id="rating2" type="radio" name="rating" value="2">
+                    <label for="rating2">2</label>
+                    <input id="rating1" type="radio" name="rating" value="1">
+                    <label for="rating1">1</label>
+                </span>
+            </div>
+            <div class="description">
+                <p>
+                    <span>
+                        @foreach (var item in attr)
+                        {
+                            <span>@item.Key</span><span>@item.Value</span><br />
+                        }
+                        
+                    </span>
+                </p>
+                <span class="details">
+                   @Model.Description
+                </span>
+            </div>
+
+            <!--<div class="occasion-cart">
+                <a href="#" class="item_add hvr-outline-out button2">Заказать</a>
+            </div>-->
+        </div>
+        <div class="clearfix"> </div>
+        <div class="bootstrap-tab animated wow slideInUp animated" data-wow-delay=".5s" style="visibility: visible; animation-delay: 0.5s; animation-name: slideInUp;">
+            <div class="bs-example bs-example-tabs" role="tabpanel" data-example-id="togglable-tabs">
+                <ul id="myTab" class="nav nav-tabs" role="tablist">
+                    <li role="presentation" class="active"><a href="#home" id="home-tab" role="tab" data-toggle="tab" aria-controls="home" aria-expanded="true">Характеристики</a></li>
+                    <li role="presentation"><a href="#profile" role="tab" id="profile-tab" data-toggle="tab" aria-controls="profile">Отзывы</a></li>
+                    <li role="presentation"><a href="#video" role="tab" id="profile-tab" data-toggle="tab" aria-controls="profile">Видео</a></li>
+                    <li role="presentation"><a href="#dropdown4" role="tab" id="profile-tab" data-toggle="tab" aria-controls="profile">Загрузки</a></li>
+
+                </ul>
+ 
+                    <div id="myTabContent" class="tab-content">
+                        <div role="tabpanel" class="tab-pane fade in active bootstrap-tab-text" id="home" aria-labelledby="home-tab">
+                            <div class="bs-docs-example">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Model</th>
+                                            @foreach (var item in Model.Models.First().Properties)
+                                            {
+                                                <th>@item.Attribute.Name , @item.Attribute.Unit</th>
+                                            }
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in Model.Models)
+                                        {
+                                            <tr>
+                                                @if (models.Contains(item) && models.Count != Model.Models.Count)
+                                                {
+                                                    <td style="color:red;">@item.Name</td>
+                                                    foreach (var prop in item.Properties)
+                                                    {
+                                                        if (prop.Attribute.Type == Types.Double)
+                                                        {
+                                                            <td style="color:red;">@prop.Double_Value</td>
+                                                        }
+                                                        else if (prop.Attribute.Type == Types.String)
+                                                        {
+                                                            <td style="color:red;">@prop.String_Value</td>
+                                                        }
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    <td>@item.Name</td>
+                                                    foreach (var prop in item.Properties)
+                                                    {
+                                                        if (prop.Attribute.Type == Types.Double)
+                                                        {
+                                                            <td>@prop.Double_Value</td>
+                                                        }
+                                                        else if (prop.Attribute.Type == Types.String)
+                                                        {
+                                                            <td>@prop.String_Value</td>
+                                                        }
+                                                    }
+                                                }
+                                            </tr>
+                                        }
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div role="tabpanel" class="tab-pane fade bootstrap-tab-text" id="profile" aria-labelledby="profile-tab">
+                            <div class="bootstrap-tab-text-grids">
+                                <div class="bootstrap-tab-text-grid">
+                                    @foreach (var item in Model.Comments)
+                                    {
+                                        <div class="bootstrap-tab-text-grid-left">
+                                            <img src="@item.Img" alt=" " class="img-responsive">
+                                        </div>
+
+                                        <div class="bootstrap-tab-text-grid-right">
+                                            <ul>
+                                                <li><a href="#">@item.Name</a></li>
+                                                @*<li><a href="#"><span class="glyphicon glyphicon-share" aria-hidden="true"></span>Ответить</a></li>*@
+                                            </ul>
+                                            <p>@item.Text</p>
+                                        </div>
+                                    }
+
+                                    <div class="clearfix"> </div>
+                                </div>
+                                <div class="add-review">
+                                    <h4>Добавить отзыв</h4>
+                                    <form>
+                                        <input type="text" value="Имя" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Имя';}" required="">
+                                        <input type="email" value="Email" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Email';}" required="">
+                                        <textarea type="text" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Сообщение...';}" required="">Сообщение...</textarea>
+                                        <input type="submit" value="Отправить">
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <div role="tabpanel" class="tab-pane fade bootstrap-tab-text" id="video" aria-labelledby="dropdown1-tab">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="embed-responsive embed-responsive-16by9">
+                                        <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/Twz258DszT8"></iframe>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="embed-responsive embed-responsive-16by9">
+                                        <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/Twz258DszT8"></iframe>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        @*<div role="tabpanel" class="tab-pane fade bootstrap-tab-text" id="dropdown2" aria-labelledby="dropdown2-tab">
+                <p>
+                    <strong>RC серия</strong><br>
+                    Нагрузка : 5-95 тонн;<br>
+                    Длина хода : 16 - 362;<br>
+                    Максимальное рабочее давление : 700 бар
+                </p>
+            </div>*@
+                        <div role="tabpanel" class="tab-pane fade bootstrap-tab-text" id="dropdown4" aria-labelledby="dropdown4-tab">
+                            <div class="bs-docs-example">
+                                <table class="table">
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <a href="/docs/clsg_e327e_gb.pdf" download="enerpac_cat">
+                                                    <img src="images/clsg_e327e.jpg">
+                                                </a>
+                                            </td>
+                                            <td>
+                                                Каталог
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <a href="/docs/clsg_e327e_gb.pdf" download="enerpac_cat">
+                                                    <img src="images/l2537_a_0.jpg">
+                                                </a>
+                                            </td>
+                                            <td>
+                                                Инструкция
+                                            </td>
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<!-- //single -->
+<!-- //product-nav -->
+<div class="coupons">
+    <div class="container">
+        <div class="coupons-grids text-center">
+            <div class="col-md-3 coupons-gd">
+                <h3>Найти решение для задачи - легко</h3>
+            </div>
+            <div class="col-md-3 coupons-gd">
+                <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                <h4>Выберите товар</h4>
+                <p>У нас большой ассортимент грузоподъемного и гидравлического оборудования.</p>
+            </div>
+            <div class="col-md-3 coupons-gd">
+                <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                <h4>Свяжитесь с нами</h4>
+                <p>Наши профессионалы ответят на любой вопрос.</p>
+            </div>
+            <div class="col-md-3 coupons-gd">
+                <span class="glyphicon glyphicon-credit-card" aria-hidden="true"></span>
+                <h4>Оплатите</h4>
+                <p>Забрать товар можно самовывозом или доставкой.</p>
+            </div>
+            <div class="clearfix"> </div>
+        </div>
+    </div>
+</div>
+
+
+@*@foreach (var item in Model.Models)
+{
+    if (models.Contains(item))
+    {
+        <span style="color:red">@item.Name</span>
+    }
+    else
+    {
+        <span>@item.Name</span>
+    }
+
+}*@
+

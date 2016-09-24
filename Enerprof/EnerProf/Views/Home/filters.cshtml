@@ -1,0 +1,98 @@
+﻿@model  IEnumerable<EnerProf.Models.Filters>
+@using EnerProf.Models;
+@{ 
+    var products_models = Model.First().Attribute.Categories.Select(x => x.Products.Select(p => p.Models).SelectMany(m => m)).SelectMany(x => x);
+    string models_id = "";
+    foreach (var model in products_models)
+    {
+        models_id += model.Id.ToString() + ";";
+    }
+    ViewData["Models"] = models_id;
+}
+<!-- //for-mobile-apps -->
+<link href="~/css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
+<!-- pignose css -->
+<link href="~/css/pignose.layerslider.css" rel="stylesheet" type="text/css" media="all" />
+
+<link href="~/css/bootstrap-slider.css" rel="stylesheet" type="text/css" media="all" />
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script type="text/javascript" src="~/Scripts/jquery-1.6.1.min.js"></script>
+<script src="~/js/jquery-3.0.0.min.js"></script>
+<script type="text/javascript" src="~/Scripts/jquery.ui-slider.js"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+
+<!-- //pignose css -->
+<link href="~/css/style.css" rel="stylesheet" type="text/css" media="all" />
+
+    <div class="col-md-2">
+        <div class="products-left">
+            @using (Ajax.BeginForm("CatalogueOfProducts", FormMethod.Post, new AjaxOptions { UpdateTargetId = "products_list" }))
+            {
+                for (int i = 0; i < Model.Count(); i++)
+                {
+                        @*<input type="hidden" name="models" id="models" value="@ViewData["Models"]"/>*@
+                        <input type="hidden" name="cat_id" value="@ViewBag.CatID" />
+                        <input type="hidden" name="attr_id" value="@Model.ToList()[i].Attribute.id" />
+                        if ((int)Model.ToList()[i].Attribute.Type == 0)
+                        {
+                            <div class="filter-price ">
+                                <h3>@Model.ToList()[i].Attribute.Name</h3>
+
+                                <input type="text" id="minCost" class="value_@Model.ToList()[i].Attribute.id" onchange="filter(@Model.ToList()[i].Attribute.id)" name="Min_Value" value="@Model.ToList()[i].Min_Value" />
+                                <input type="text" id="maxCost" class="value_@Model.ToList()[i].Attribute.id" onchange="filter(@Model.ToList()[i].Attribute.id)" name="Max_Value" value="@Model.ToList()[i].Max_Value" />
+                                <div id="slider"></div>
+                                <script>
+                                    
+                                    jQuery("#slider").slider({
+                                        min: @Model.ToList()[i].Min_Value,
+                                        max: @Model.ToList()[i].Max_Value,
+                                        values: [@Model.ToList()[i].Min_Value, @Model.ToList()[i].Max_Value],
+                                        range: true,
+
+                                        stop: function (event, ui) {
+                                            jQuery("input#minCost").val(jQuery("#slider").slider("values", 0));
+                                            jQuery("input#maxCost").val(jQuery("#slider").slider("values", 1));
+                                            jQuery(".value_@Model.ToList()[i].Attribute.id").change();
+                                        },
+                                        slide: function (event, ui) {
+                                            jQuery("input#minCost").val(jQuery("#slider").slider("values", 0));
+                                            jQuery("input#maxCost").val(jQuery("#slider").slider("values", 1));
+                                        }
+                                    });
+                                </script>
+
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="swit form css-treeview">
+                                <h4>@Model.ToList()[i].Attribute.Name</h4>
+
+                                @foreach (string value in Model.ToList()[i].String_Values.Distinct())
+                                {
+                                    <div class="check_box"> <div class="radio"> <label><input type="checkbox" class="value" id="@Model.ToList()[i].Attribute.id" name="String_Values" value="@value _ @Model.ToList()[i].Attribute.id"/><i></i>@value</label> </div></div>
+                                }
+                            </div>
+                        }
+
+                }
+                <input type="submit" style="display:none;" class="sub" value="Применить" />
+
+            }
+        </div>
+    </div>
+
+
+<script>
+
+    $(".value").change(function () {
+        var id = $(this).attr("id");
+        var sub = ".sub_" + id;
+        $(".sub").click();
+    })
+
+    function filter(id){
+        var sub = ".sub_" + id;
+        $(".sub").click();
+    }
+</script>

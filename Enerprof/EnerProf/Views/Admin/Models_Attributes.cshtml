@@ -1,0 +1,23 @@
+﻿@model IEnumerable<EnerProf.Models.AttributesValues>
+
+
+<div class="form-group">
+    @Html.LabelFor(model => model, htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @foreach (var item in Model)
+        {
+            @Html.Label(item.Attribute.Name)
+
+            if (item.Attribute.Type == EnerProf.Models.Types.Double)
+            {
+                <input type="number" value="@item.Double_Value" name="value" />
+            }
+            else
+            {
+                <input type="text" value="@item.String_Value" name="value" />
+            }
+            <br />
+        }
+    </div>
+</div>
+

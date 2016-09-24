@@ -1,0 +1,237 @@
+﻿@using EnerProf.DataBaseClasses;
+@using EnerProf.Models;
+@using System.Data.Entity;
+@{
+    //ITable itable = new CategoriesReader();
+    //GenericListOfElements<Category> categories_gen = new GenericListOfElements<Category>(itable, "0", "parentID");
+    //List<Category> model_categories = categories_gen.ListOfItems;
+    ////Подкатегории для каждой категории. Заполнение коллекции
+    //foreach (Category category in model_categories)
+    //{
+    //    categories_gen = new GenericListOfElements<Category>(itable, category.id.ToString(), "parentID");
+    //    category.Sub = categories_gen.ListOfItems;
+    //}
+    List<Category> model_categories;
+    using (var context = new CodeContext())
+    {
+        IEnumerable<Category> cats = context.Categories.ToList().Where(cat => cat.Parent == null);
+
+        foreach (var category in cats)
+        {
+            category.Sub = cats.Where(cat => cat.Parent == category).ToList();
+        }
+        model_categories = cats.ToList();
+        //ViewBag.Industries = context.Industries;
+        //ViewBag.Clients = context.Clients;
+
+        ViewBag.Title = "Enerprof";
+
+    }
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>@ViewBag.Title</title>
+    <!-- for-mobile-apps -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+    <script type="application/x-javascript">
+        addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false);
+               function hideURLbar(){ window.scrollTo(0,1); } </script>
+    <!-- //for-mobile-apps -->
+    <link href="~/css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
+    <!-- pignose css -->
+    <link href="~/css/pignose.layerslider.css" rel="stylesheet" type="text/css" media="all" />
+
+
+    <!-- //pignose css -->
+    <link href="~/css/style.css" rel="stylesheet" type="text/css" media="all" />
+    <!-- js -->
+    <script type="text/javascript" src="~/js/jquery-2.1.4.min.js"></script>
+    <!-- //js -->
+    <!-- cart -->
+    <script src="~/js/simpleCart.min.js"></script>
+    <!-- cart -->
+    <!-- for bootstrap working -->
+    <script type="text/javascript" src="~/js/bootstrap-3.1.1.min.js"></script>
+    <!-- //for bootstrap working -->
+    <!--<link href='//fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>-->
+    <!--<link href='//fonts.googleapis.com/css?family=Lato:400,100,100italic,300,300italic,400italic,700,900,900italic,700italic' rel='stylesheet' type='text/css'>-->
+    <script src="~/js/jquery.easing.min.js"></script>
+</head>
+<body>
+    <!-- header -->
+    <div class="header">
+
+    </div>
+    <!-- //header -->
+    <!-- header-bot -->
+    <div class="header-bot">
+        <div class="container">
+            <div class="col-md-3 header-left">
+                <h1><a href="~/Home/Index"><img src="~/images/logo_EP.png"></a></h1>
+            </div>
+            <div class="col-md-6 header-middle">
+                <form>
+                    <div class="search">
+                        <input type="search" value="Поиск" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Поиск';}" required="">
+                    </div>
+                    <div class="sear-sub">
+                        <input type="submit" value=" ">
+                    </div>
+                    <div class="section_room">
+                        <select id="country" onchange="change_country(this.value)" class="frm-field required">
+                            <option value="null">044 234-25-25</option>
+                            <option value="null">044 263-55-55</option>
+                            <option value="AX">044 423-25-25</option>
+
+                        </select>
+                    </div>
+
+                    <div class="clearfix"></div>
+                </form>
+            </div>
+            <div class="col-md-3 header-right footer-bottom">
+                <ul>
+                    <!--<li><a href="#" class="use1" data-toggle="modal" data-target="#myModal4"><span>Войти</span></a>-->
+                    </li>
+                    <li><a class="fb" href="#"></a></li>
+                    <li><a class="twi" href="#"></a></li>
+                    <li><a class="insta" href="#"></a></li>
+                    <li><a class="you" href="#"></a></li>
+                </ul>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+    <!-- //header-bot -->
+    <!-- banner -->
+    <div class="ban-top">
+        <div class="container">
+            <div class="top_nav_left">
+                <nav class="navbar navbar-default">
+                    <div class="container-fluid">
+                        <!-- Brand and toggle get grouped for better mobile display -->
+                        <div class="navbar-header">
+                            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                                <span class="sr-only">Toggle navigation</span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </button>
+                        </div>
+                        <!-- Collect the nav links, forms, and other content for toggling -->
+                        <div class="collapse navbar-collapse menu--shylock" id="bs-example-navbar-collapse-1">
+                            <ul class="nav navbar-nav menu__list">
+                                <li class="active menu__item menu__item--current"><a class="menu__link" href="index.html">Главная <span class="sr-only">(current)</span></a></li>
+                                <li class="dropdown menu__item">
+                                    <a href="#" class="dropdown-toggle menu__link" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Оборудование<span class="caret"></span></a>
+                                    <ul class="dropdown-menu multi-column columns-3">
+                                        <div class="row">
+                                            <div class="col-sm-6 multi-gd-img1 multi-gd-text ">
+                                                <a href="/Home/categories"><img src="~/images/woo2.png" alt=" " /></a>
+                                            </div>
+                                            <div class="col-sm-3 multi-gd-img">
+                                                <ul class="multi-column-dropdown">
+                                                    @foreach (Category cat in model_categories)
+                                                    {
+                                                        <li><a href="/Home/categories?parent=@cat.Id">@cat.Name</a></li>
+                                                    }
+                                                </ul>
+                                            </div>
+                                            <div class="clearfix"></div>
+                                        </div>
+                                    </ul>
+                                </li>
+                                <li class="dropdown menu__item">
+                                    <a href="#" class="dropdown-toggle menu__link" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Сервис <span class="caret"></span></a>
+                                    <ul class="dropdown-menu multi-column columns-3">
+                                        <div class="row">
+                                            <div class="col-sm-3 multi-gd-img">
+                                                <ul class="multi-column-dropdown">
+                                                    @foreach (Category cat in model_categories)
+                                                    {
+                                                        <li><a href="tools.html">@cat.Name</a></li>
+                                                    }
+                                                </ul>
+                                            </div>
+                                            <div class="col-sm-6 multi-gd-img multi-gd-text ">
+                                                <a href="tools.html"><img src="~/images/woo1.png" alt=" " /></a>
+                                            </div>
+                                            <div class="clearfix"></div>
+                                        </div>
+                                    </ul>
+                                </li>
+                                <li class=" menu__item"><a class="menu__link" href="clients.html">Клиенты</a></li>
+                                <li class=" menu__item"><a class="menu__link" href="about.html">О компании</a></li>
+                                <li class=" menu__item"><a class="menu__link" href="~/Home/Contacts">Контакты</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+            <div class="top_nav_right">
+                <div class="cart box_1">
+                    <p><a href="javascript:;" class="simpleCart_empty">Заказать звонок</a></p>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+    <!-- //banner-top -->
+    @RenderBody()
+
+    <!-- footer -->
+    <div class="footer">
+        <div class="container">
+            <div class="col-md-3 footer-left">
+                <h2><a href="index.html"><img src="~/images/logo_EP.png" alt=" " /></a></h2>
+                <p>Основными направлениями деятельности ООО «Энерпроф» является поставка, монтаж и сервисное обслуживание грузоподъемного и гидравлического оборудования во всех отраслях промышленности</p>
+            </div>
+            <div class="col-md-9 footer-right">
+                <div class="col-sm-6 newsleft">
+                    <h3>ПОДПИШИСЬ НА ОБНОВЛЕНИЯ!</h3>
+                </div>
+                <div class="col-sm-6 newsright">
+                    <form>
+                        <input type="text" value="Email" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Email';}" required="">
+                        <input type="submit" value="Отправить">
+                    </form>
+                </div>
+                <div class="clearfix"></div>
+                <div class="sign-grds">
+                    <div class="col-md-4 sign-gd">
+                        <h4>Информация</h4>
+                        <ul>
+                            <li><a href="index.html">Главная</a></li>
+                            <li><a href="services.html">Оборудование</a></li>
+                            <li><a href="tools.html">Сервис</a></li>
+                            <li><a href="clients.html">Клиенты</a></li>
+                            <li><a href="about.html">О компании</a></li>
+                            <li><a href="contact.html">Контакты</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="col-md-4 sign-gd-two">
+                        <h4>О магазине</h4>
+                        <ul>
+                            <li><i class="glyphicon glyphicon-map-marker" aria-hidden="true"></i>Адрес : ул. Садовая, дом 18 <span>Киев.</span></li>
+                            <li><i class="glyphicon glyphicon-envelope" aria-hidden="true"></i>Email : <a href="">enerpac.ua@gmail.com</a></li>
+                            <li><i class="glyphicon glyphicon-earphone" aria-hidden="true"></i>Телефон : +38 (044)239-21-33 </li>
+                        </ul>
+                    </div>
+                    <div class="col-md-4 sign-gd flickr-post">
+                        <h4>Поддержка</h4>
+                        <p> Если у вас возникли проблемы или вопросы, связанные с нашими товарами, не отчаивайтесь — Центр поддержки всегда рад помочь.</p>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+            <p class="copy-right">&copy 2016 Enerprof. All rights reserved </p>
+        </div>
+    </div>
+    <!-- //footer -->
+</body>
+</html>

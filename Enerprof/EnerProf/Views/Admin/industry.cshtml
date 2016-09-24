@@ -1,0 +1,78 @@
+﻿@model EnerProf.Models.Industries
+@using EnerProf.Models;
+
+@{
+    ViewBag.Title = "industry";
+    Layout = "~/Views/Admin/_AdminLayout.cshtml";
+    List<Product> products = ViewBag.Products;
+}
+
+<h2>Отраслевые решения</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>Industries</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.Id)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Img, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div class="col-md-10">
+                    @if (Model.Img != null && Model.Img != "")
+                    {
+                        <img src="@Model.Img" width="100" height="100" />
+                    }
+                    <input type="file" name="Image" class="form-control" />
+                    @Html.ValidationMessageFor(model => model.Img, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+            </div>
+        </div>
+            <div class="form-group">
+                @Html.Label("ИНтересные товары", new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @foreach (var item in products)
+                    {
+                            if (Model.Products != null && Model.Products.Contains(item))
+                            {
+                                <input type="checkbox" name="same_products" value="@item.Id" checked />@item.Name <br />
+                            }
+                            else
+                            {
+                                <input type="checkbox" name="same_products" value="@item.Id" />@item.Name <br />
+                            }
+
+                    }
+                </div>
+            </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

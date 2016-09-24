@@ -1,0 +1,329 @@
+﻿@model EnerProf.Models.Product
+@using EnerProf.Models;
+@{
+    ViewBag.Title = "product";
+    Layout = "~/Views/Admin/_AdminLayout.cshtml";
+    List<Category> cats = ViewBag.Cats;
+    List<Product> products = ViewBag.products;
+}
+
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/js/jquery-2.2.1.min.js"></script>
+<script src="~/js/jquery-3.0.0.min.js"></script>
+<script src="~/Scripts/tinymce/jquery.tinymce.min.js"></script>
+
+@using (Html.BeginForm("product", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>Product</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.Id)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <hr />
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Img, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @if(Model.Img != null && Model.Img != "")
+                {
+                    <img src="@Model.Img" width="100" height="100"/>
+                }
+                <input type="file" name="Image" class="form-control" />
+                
+                @Html.ValidationMessageFor(model => model.Img, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <hr />
+        <div class="form-group">
+            @Html.LabelFor(model => model.Video, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Video, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Video, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <hr />
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div id="editor-field">
+                    @Html.EditorFor(model => model.Description)
+                </div>
+                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <hr />
+
+        <div class="form-group">
+            @Html.Label("Похожие товары", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @foreach (var item in products)
+                {
+                    if (item.Id != Model.Id)
+                    {
+                        if(Model.SameProducts != null && Model.SameProducts.Contains(item))
+                        {
+                            <input type="checkbox" name="same_products" value="@item.Id" checked />@item.Name <br />
+                        }
+                        else
+                        {
+                            <input type="checkbox" name="same_products" value="@item.Id" />@item.Name <br />
+                        }
+
+                    }
+                }
+            </div>
+        </div>
+        <hr />
+
+
+        
+        <div id="photos" class="row margin-bottom">
+            @Html.Label("Изображения")
+            @if (Model.Images != null && Model.Images.Length > 0)
+            {
+                <ul class="col-sm-6">
+                    @foreach (string img in Model.Images.Remove(Model.Images.Length - 1, 1).Split(';'))
+                    {
+                        <li style="list-style:none; display:block;">
+                            <!--Ромка, Размер картинок поменять нужно-->
+                            <img class="img-responsive delete_hover" style="max-width:100px; max-height:500px; background-size:contain;" src="@img" alt="Photo">
+                            <button type="button" id="delete_img" value="@img" class="delete_img btn btn-danger pull-right" style="margin-right: 5px;">
+                                <i class="fa fa-remove">удалить</i>
+                            </button>
+                        </li>
+                    }
+                </ul>
+
+            }
+            <div class="form-group margin-bottom-none">
+                <div class="col-sm-6">
+                    <label for="inputFile">Загрузить фото</label>
+                    <input type="file" multiple accept="image/*" name="file" id="inputFile">
+                </div>
+                <div class="col-sm-3">
+                    <input type="button" id="save_img" class="btn btn-success pull-right btn-block btn-sm" value="Загрузить" />
+                </div>
+            </div>
+
+        </div>
+        <hr />
+
+        <div id="category" class="row margin-bottom">
+           <label>Категория</label>
+            <select name="Category">
+                @if(Model.Category!=null)
+                { 
+                    <option value="@Model.Category.Id">@Model.Category.Name</option>
+                }
+                @foreach (var cat in cats)
+                {
+                    <option value="@cat.Id">@cat.Name</option>
+                }
+            </select>
+            
+        </div>
+        <hr />
+
+
+        <div id="files" class="row margin-bottom">
+            @Html.Label("Дополнительные файлы")
+            @if (Model.Files != null && Model.Files.Length > 0)
+            {
+                <ul class="col-sm-6">
+                    @foreach (string file in Model.Files.Remove(Model.Images.Length - 1, 1).Split(';'))
+                    {
+                        <li style="list-style:none; display:block;">
+                            <label>@file</label>
+                            <button type="button" id="delete_file" value="@file" class="delete_img btn btn-danger pull-right" style="margin-right: 5px;">
+                                <i class="fa fa-remove">удалить</i>
+                            </button>
+                        </li>
+                    }
+                </ul>
+
+            }
+        </div>
+
+
+        <div class="form-group margin-bottom-none">
+            <div class="col-sm-6">
+                <label for="input_file">Загрузить файл</label>
+                <input type="file" name="file" id="input_file">
+            </div>
+            <div class="col-sm-3">
+                <input type="button" id="save_file" class="btn btn-success pull-right btn-block btn-sm" value="Загрузить" />
+            </div>
+        </div>
+        
+        @if (Model.Comments != null)
+        {       
+             foreach (Comment review in Model.Comments)
+                {
+                    <div class="active tab-pane" id="comment">
+                        <!-- Post -->
+                        <div class="post">
+                            <div class="user-block">
+                                @*<img class="img-circle img-bordered-sm" src="../../dist/img/comment_pic/pic_4.png" alt="user image">*@
+                                <span class="username">
+                                    <a href="#">@review.Name</a>
+                                    <a href="#" class="pull-right btn-box-tool"><i class="fa fa-times"></i></a>
+                                    <button id="delete_comment" value="@review.id"></button>
+                                </span>
+                            </div>
+                            <!-- /.user-block -->
+                            <p>@review.Text</p>
+                        </div>
+                    </div>
+                }
+        }
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+    <hr />
+    <h2>Модели</h2>
+
+    <p>
+        @Html.ActionLink("Create New", "model", new { product_id = Model.Id })
+    </p>
+    if (Model.Models != null)
+    {
+        @Html.Partial("models", Model.Models)
+    }
+
+
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+<script>
+    $(".new_attr").change(function () {
+        var element = $(this);
+        var parent = $(this).parent;
+        element = $(this).clone().appendTo("#attributes");
+        element.addClass("new_attr");
+    })
+
+    $("#save_img").on('click', function (e) {
+        e.preventDefault();
+        var files = document.getElementById('inputFile').files;
+        if (files.length > 0) {
+            if (window.FormData !== undefined) {
+                var data = new FormData();
+                for (var x = 0; x < files.length; x++) {
+                    data.append("file" + x, files[x]);
+                }
+
+
+                $.ajax({
+
+                    type: "POST",
+                    url: '@Url.Action("SaveNewImage", "Admin", new { id = Model.Id })',
+                    contentType: false,
+                    processData: false,
+                    data: data,
+                    success: function (result) {
+                        alert("Файл загружен");
+                    },
+                    error: function (xhr, status, p3) {
+                        alert(xhr.responseText);
+                    }
+                });
+            } else {
+                alert("Браузер не поддерживает загрузку файлов HTML5!");
+            }
+        }
+    });
+    $(".delete_img").click(function(){
+        var link = $(this).val();
+        if(confirm("Вы уверены, что хотите удалить изображение?"))
+        {
+            $.get({
+                url: "/Admin/Delete?link="+ link +"&id=@Model.Id",
+                success: function (result) {
+                    alert("Файл удален");
+                },
+                error: function (xhr, status, p3) {
+                    alert(xhr.responseText);
+                }
+            });
+        }
+        $(this).unwrap();
+    });
+    $("#save_file").on('click', function (e) {
+        e.preventDefault();
+        var files = document.getElementById('input_file').files;
+        if (files.length > 0) {
+            if (window.FormData !== undefined) {
+                var data = new FormData();
+                for (var x = 0; x < files.length; x++) {
+                    data.append("file" + x, files[x]);
+                }
+
+
+                $.ajax({
+
+                    type: "POST",
+                    url: '@Url.Action("SaveNewFile", "Admin", new { id = Model.Id })',
+                    contentType: false,
+                    processData: false,
+                    data: data,
+                    success: function (result) {
+                        alert("Файл загружен");
+                    },
+                    error: function (xhr, status, p3) {
+                        alert(xhr.responseText);
+                    }
+                });
+            } else {
+                alert("Браузер не поддерживает загрузку файлов HTML5!");
+            }
+        }
+    });
+    $(".delete_file").click(function () {
+        var link = $(this).val();
+        if (confirm("Вы уверены, что хотите удалить файл?")) {
+            $.get({
+                url: "/Admin/Delete_File?link=" + link + "&id=@Model.Id",
+                success: function (result) {
+                    alert("Файл удален");
+                },
+                error: function (xhr, status, p3) {
+                    alert(xhr.responseText);
+                }
+            });
+        }
+        $(this).unwrap();
+    });
+    $(".delete_comment").click(function () {
+        var id = $(this).val();
+        if (confirm("Вы уверены, что хотите удалить комментарий?")) {
+            $.get({
+                url: "/Admin/DeleteComment?id=" + id,
+                success: function (result) {
+                    alert("Kомментарий удален");
+                },
+                error: function (xhr, status, p3) {
+                    alert(xhr.responseText);
+                }
+            });
+        }
+        $(this).unwrap();
+    });
+
+
+</script>

@@ -1,0 +1,516 @@
+body{
+	font-size: 14px;
+	font-family: 'Lato-Regular';
+}
+.head a:hover,
+.head a:focus{
+	text-decoration: none;
+	color: #ffffff;
+}
+header,
+section.pic_menu{
+	background-color: #3b3a3a;
+	box-shadow: 0 0 20px rgba(0,0,0,0.5);
+}
+.head_bar {
+    margin-top: 73px;
+}
+h5{
+	text-align: center;
+}
+span.logo{
+	height: 99px;  /*Пока что не знаю на что делить(((*/
+	width: 88.87179%;  /*146px*/
+	margin-top: 25%;   /*48px*/
+	margin-bottom: 20.83333333%; /*40px*/
+	display: inline-block;
+	background: url(../img/logo_EP.png) no-repeat;
+}
+span.logo:hover{
+	background-image: url(../img/logo_EP_hover.png);
+}
+.button{
+    display: inline-block;
+    background-color: #ff6008;
+    height: 40px;
+    border-radius: 20px;
+    padding: 0 30px;
+    font-family: 'Lato-Regular';
+	font-size: 15px;
+    color: #fff;
+    border: 2px solid #ff6008;
+}
+.button:hover{
+	border: 2px solid #ff6008;
+	background-color: #3b3a3a;
+}
+.button:active{
+
+}
+input[type="text"]{
+	border-radius: 20px;
+	height: 40px;
+	width: 238px;
+	background-color: #3b3a3a;
+	border: 2px solid #33cbfa;
+	color: #ffffff;
+	font-family: 'Lato-Regular';
+	font-size: 15px;
+	text-align: center;
+}
+input[type="text"]:focus{
+	outline: none; 
+}
+button.btn.btn-primary.dropdown-toggle.button.callback {
+    border-radius: 20px;
+}
+button.btn.btn-primary.dropdown-toggle.button.callback:focus{
+	background-color: #ffffff;
+	border: 2px solid #33cbfa;
+	outline: none; 
+}
+span.call_icon{
+	display: inline-block;
+	height: 13px;
+	width: 20px;
+	background-image: url(../img/call_icon.png);
+}
+span.arrow{
+	display: inline-block;
+	height: 7px;
+	width: 13px;
+	background-image: url(../img/arrow.png);
+}
+span.pr_number {
+    font-size: 12px;
+    color: #ff6008;
+}
+span.af_number {
+    font-size: 17px;
+    color: #33cbfa;
+}
+span.af_number:hover{
+    color: #ffffff;
+}
+ul.dropdown-menu{
+	width: 200px;
+	border-radius: 20px;
+	border: 2px solid #33cbfa;
+}
+.button.callback{
+	width: 200px;
+	background-color: #3b3a3a;
+	border: 2px solid #33cbfa;
+	color: #33cbfa;
+}
+.button.callback:hover{
+	background-color: #33cbfa;
+	border: 2px solid #33cbfa;
+}
+.button.callback:hover span.arrow{
+	background-image: url(../img/arrow_hover.png);
+}
+.button.callback:focus span.arrow{
+	background-image: url(../img/arrow.png);
+}
+.button.callback:hover span.af_number{
+	color: #ffffff;
+}
+.button.callback:focus span.af_number{
+	color: #33cbfa;
+}
+                              /*Главное меню*/
+.main_menu{
+	background: linear-gradient(to bottom, rgba(51,203,250,1) 0%, rgba(63,199,244,1) 51%, rgba(51,204,250,1) 51%, rgba(63,199,244,1) 71%, rgba(63,199,244,1) 100%);
+	-webkit-box-shadow: rgba(255,255,255,.3) 0 0 0 1px;
+	box-shadow: rgba(255,255,255,.3) 0 0 0 1px;
+	font-family: "Lato-Medium";
+	border-bottom: 2px solid #347ccc;
+}
+.main_menu ul{
+	margin: 0;
+	padding: 0;
+	list-style-type: none;
+}
+.main_menu li{
+	float: left;
+}
+.main_menu a{
+	font-size: 21px;
+	color: #ffffff;
+}
+.main_menu a:hover{
+	text-decoration: none;
+	color: #ffffff;
+
+}
+.menu_item{
+	margin: 0 20px;
+}
+.mnu_icon{
+	height: 91px;
+	margin-top: -10px;
+}
+.mnu_icon:hover{
+	background-color: #ff6008;
+}
+
+						/*Карусель*/
+
+.flo_img {
+    width: 670px;
+    display: inline-block;
+}
+.description{
+	
+	display: inline-block;
+}
+.wrapper img {
+    vertical-align: middle;
+    margin-right: 3%;
+}
+.wrapper h3{
+	font-size: 45px;
+	color: #ff6008;
+	font-family:'Lato-Bold';
+	text-align: left;
+}
+p#desc-text {
+    margin-top: 5%;
+    margin-left: 0.298507%;
+    font-size: 24px;
+	color: black;
+	font-family:'Lato-Bold';
+	text-align: left;
+}
+.company_logo {
+    margin-top: 28px;
+}
+.company_logo h6{
+	font-family: 'Lato-ThinItalic';
+	font-size: 24px;
+}
+.company_logo img{
+	float:left;
+}
+h6#comp-from {
+    margin-top: 55.5555555%;
+    margin-left: 0.85714285%;
+}
+.go{
+	width: 183px;
+	margin-right: 15%;
+}
+.go:hover{
+	background-color:#ffffff;
+	border: 2px solid  #ff6008;
+}
+.go:hover h5{
+	color: #ff6008;
+}
+.slider_next a:hover,
+.slider_next a:focus{
+	text-decoration:none;
+}
+.carousel-indicators.li_ind   {
+    background-color: #ababab;
+    border-radius: 15px;
+    width: 15px;
+    height: 15px;
+    border: 1px solid #ababab;
+}
+li.li_ind.active {
+	border-radius: 18px;
+    width: 18px;
+    height: 18px;
+    margin: 0;
+    background-color: #fff;
+    border: 1px solid #ababab;
+}
+
+/*Первая секция - Оборудование от компании*/
+span#logo{
+	background: url(../img/section_first_icon.png) no-repeat;
+	width: 65px;
+	height: 65px;
+	display: block;
+	float: left;
+    margin-top: -2%;
+    margin-right: 2%;
+}
+
+.head_section h2{
+	color: #ffffff;
+	font-size: 30px;
+	font-family: 'Lato-Bold';
+	text-transform: uppercase;
+	margin-top: 4%;
+	margin-bottom: 3%
+}
+span#ener{
+	color: #33cbfa;
+}
+
+.pic_item{
+	background: url(../img/first-section-icon.png) no-repeat 50% 50%;
+	display: block;
+	width: 219px;
+	height: 405px;
+	margin-top: 10%;
+	margin-bottom: 42.39631336%;
+    margin: 0 12%;
+}
+.pic_item:hover{
+    background: url(../img/hover_section_two.png) no-repeat 50% 50%;
+}
+.pic_item:hover.pic_item span{
+    display: none;
+}
+
+.pic_item h4{
+	text-align: center;
+	font-family: 'Lato-Black';
+	color: #33cbfa;
+	font-size: 21px;
+}
+.pic_item span{
+	display: block;
+	background: url(../img/first-section-iconset.png) no-repeat;
+	width: 200px;
+	height: 200px;
+}
+.pic_item p{
+	color: #000000;
+	font-family: 'Lato-Regular';
+	font-size: 19px;
+	text-align: center; 
+    margin-top: 8.148148%;
+}
+.cont a:hover,
+.cont a:focus{
+    text-decoration: none;
+}
+
+                             /*Вторая секция - Отраслевые решения*/
+
+.pic_menu_desition,
+footer{
+	background-color: #33cbfa;
+}
+span#logo_desition{
+	background-image: url(../img/logo_desition.png);
+	width: 33px;
+	height: 48px;
+	display: block;
+	float: left;
+
+    margin-top: -1%;
+    margin-right: 3%;
+}
+.item_desition{
+	background: url(../img/pic_section_2.png) no-repeat;
+	display: block;
+	width: 314px;
+	height: 145px;
+	margin-left: 31%;
+}
+.item_desition h4{
+	font-size: 21px;
+	font-family: 'Lato-Black';
+	color: #33cbfa;
+}
+.item_desition span{
+	background: url(../img/iconset_pic_mnu.png) no-repeat;
+	width: 140px;
+	height: 120px;
+	display: block;
+	float: left;
+}
+.item_des_mnu a:hover,
+.item_des_mnu a:focus{
+	text-decoration: none;
+}
+.item_des_mnu h4{
+    text-align: center;
+    padding: 13% 2px;
+}
+.item_desition:nth-child(1) span{
+    background-position: 7px 18px;
+}
+
+
+					/*Третья секция - У нас есть решения для любых задач*/
+
+.orange_h{
+	color: #ff6008;
+	font-family: 'Lato-Black';
+}
+.orange h2{
+	color: #ff6008;
+ 
+}
+.info_p {
+    margin-bottom: 5%;
+}
+.info p{
+	font-size: 18px;
+	color: #afbec5;
+	margin-top: 2%;
+}
+.line{
+	border-right: 1px solid #eee;;
+	padding-right: 10px;
+}
+hr{
+	border-top: 1px solid #3b3a3a;
+} 
+
+
+/*Карусель логотипов - клиентов*/
+
+section.carousel_of_clients{
+	background-color: #3b3a3a;
+}
+
+ul{
+	list-style-type: none;
+}
+ul li{
+	float: left;
+	margin-bottom: 8px;
+}
+
+/*footer*/
+.infologo h4{
+	color: #ffffff;
+	text-align: center;
+	font-size: 21px;
+	margin: 14% 0;
+}
+.infologo h6{
+	color: #ffffff;
+	font-size: 12px;
+}
+span.logo_foot{
+	height: 99px;  /*Пока что не знаю на что делить(((*/
+	width: 88.87179%;
+	display: block;
+	background: url(../img/logo_EP.png) no-repeat 50% 50%;
+	margin-top: 15%;
+}
+.about_company h3,
+.support h3,
+.contact h3{
+	border-bottom: 2px solid black;
+	padding-bottom: 3px;
+	padding-top: 3px;
+	font-size: 21px;
+	color: #ffffff;
+	    margin-top: 42px;
+}
+.button_foot{
+	display: block;
+    background-color: #3fc8f4;
+    height: 40px;
+    border-radius: 20px;
+    padding: 0 30px;
+    font-family: 'Lato-Regular';
+	font-size: 15px;
+    color: #fff;
+    border: 2px solid #afbec5;
+    text-align: left;
+    margin-bottom: 10px;
+    margin-top: 5px;
+}
+.button_foot.small{
+	width: 155px;
+}
+.button_foot.big{
+	width: 244px;
+}
+.button_foot:hover{
+	border: 2px solid #afbec5;
+	background-color: #afbec5;
+	color: #3fc8f4; 
+}
+a:hover li{
+	text-decoration: none;
+}
+.contact h4{
+	color: #ffffff;
+	font-size: 21px;
+	font-family: 'Lato-HeavyItalic';
+}
+.foot_numb{
+	color: #ffffff;
+	font-size: 21px;
+	font-family: 'Lato-Heavy';
+	display: block;
+}
+.contact p{
+	font-size: 12px;
+	color: #bdbdbd;
+}
+.hours{
+	font-size: 21px;
+	font-family: 'Lato-Heavy'; 
+}
+.contact{
+	margin-bottom: 21%;
+}
+
+
+/*Второй слайдер*/
+.slider_section h2{
+	color: #33CBFA;
+	font-size: 30px;
+	font-family: 'Lato-Bold';
+	text-transform: uppercase;
+	margin-top: 4%;
+	margin-bottom: 3%
+}
+
+#slider {
+	width: 1000px;
+	height: 200px;
+	overflow: hidden;
+    margin: 1% 0;
+}
+
+#slider .slides {
+	display: block;
+	width: 6000px;
+	height: 200px;
+	margin: 0;
+	padding: 0;
+}
+
+#slider .slide {
+	float: left;
+	list-style-type: none;
+	width: 1000px;
+	height: 200px;
+}
+.slide1 {
+    background-image: url(../img/slider_set.png);
+    background-repeat: no-repeat;
+}
+.slide2 {
+    background-image: url(../img/slider_set.png);
+    background-repeat: no-repeat;
+}
+.slide3 {
+    background-image: url(../img/slider_set.png);
+    background-repeat: no-repeat;
+}
+
+
+
+.infologo a:hover,
+.infologo a:focus,
+.about_company a:hover,
+.about_company a:focus,
+.support a:hover,
+.support a:focus{
+    text-decoration: none;
+}

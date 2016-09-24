@@ -1,0 +1,48 @@
+﻿@model IEnumerable<EnerProf.Models.Product>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Admin/_AdminLayout.cshtml";
+}
+
+<h2>Index</h2>
+
+<h3>Категории</h3>
+@foreach (var cat in Model.Select(m=>m.Category))
+{
+    <span>@cat.Id</span>
+    <span>@cat.Name</span>
+    if (cat.Parent != null)
+    {
+        <span>@cat.Parent.Name</span>
+    }
+}
+<h3>Фильтры</h3>
+@foreach (var models in Model.Select(m => m.Models))
+{
+    foreach (var model in models)
+    {
+        foreach (var prop in model.Properties)
+        {
+            <span>@prop.Attribute.id</span>
+            <span>@prop.Attribute.Name</span>
+        }
+    }
+}
+<h3>Товары</h3>
+<p>
+    @Html.ActionLink("Добавить новый товар", "product")
+</p>
+
+@foreach (var item in Model)
+{
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "product", new { id = item.Id }) |
+                @Html.ActionLink("Delete", "DeleteProduct", new { id = item.Id })
+            </td>
+        </tr>
+}

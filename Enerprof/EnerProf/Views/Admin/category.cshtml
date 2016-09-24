@@ -1,0 +1,112 @@
+﻿@model EnerProf.Models.Category
+@using EnerProf.Models;
+@{
+    ViewBag.Title = "category";
+    Layout = "~/Views/Admin/_AdminLayout.cshtml";
+    List<Category> cats = ViewBag.Cats;
+    cats.Remove(Model.Parent);
+    cats.Remove(Model);
+    List<AttributeModel> attrs = ViewBag.Attributes;
+}
+
+<h2>@Model.Name</h2>
+
+@using (Html.BeginForm("category", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>Category</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.Id)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div id="category" class="row margin-bottom">
+            <label>Категория</label>
+            <select name="Category">
+                @if (Model.Parent != null)
+                {
+                    <option value="@Model.Parent.Id">@Model.Parent.Name</option>
+                }
+
+                <option value="0">Корневая категория</option>
+
+                @foreach (var cat in cats)
+                {
+                    <option value="@cat.Id">@cat.Name</option>
+                }
+            </select>
+
+        </div>
+
+        <div class="form-group">
+            <label>Изображение</label>
+
+            @if (Model.Img != null)
+            {
+                <img src="@Model.Img"/>
+            }
+
+            <div class="col-md-10">
+                <input type="file" multiple accept="image/*" id="main_img" name="Image" class="form-control"  />
+
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.IsOnStartPage, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div class="checkbox">
+                    @Html.EditorFor(model => model.IsOnStartPage)
+                    @Html.ValidationMessageFor(model => model.IsOnStartPage, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Атрибуты", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @foreach (var item in attrs)
+                {
+                        if (Model.Attributes != null && Model.Attributes.Contains(item))
+                        {
+                            <input type="checkbox" name="Attributes" value="@item.id" checked />@item.Name <br />
+                        }
+                        else
+                        {
+                            <input type="checkbox" name="Attributes" value="@item.id" />@item.Name <br />
+                        }
+
+                }
+            </div>
+        </div>
+        <hr />
+
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "categories")
+</div>

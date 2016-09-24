@@ -1,0 +1,23 @@
+﻿@model EnerProf.Models.Category
+@using EnerProf.Models;
+@{
+    ViewBag.Title = "products";
+    Layout = "~/Views/Home/_HomeLayout.cshtml";
+    List<Filters> filters = ViewBag.Filters;
+    
+}
+<div class="page-head">
+    <div class="container">
+        <h3>@Model.Name</h3>
+        <!-- название подкатегории -->
+    </div>
+</div>
+<div class="men-wear">
+    <div class="row">
+
+            @Html.Partial("filters", filters)
+        <div class="col-md-8" id="products_list">
+            @Html.Partial("CatalogueOfProducts")
+        </div>
+    </div>
+</div>
